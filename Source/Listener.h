@@ -8,8 +8,8 @@ class Listener : public Socket {
 public:
     Listener();
 
-    bool accept(Socket* socket);
-    bool listen(unsigned short port);
+    bool accept(Socket* socket) noexcept;
+    bool listen(unsigned short port) noexcept;
 };
 
 } // namespace rokunet
