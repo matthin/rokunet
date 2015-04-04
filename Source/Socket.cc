@@ -25,7 +25,8 @@ std::string Socket::receive(const unsigned int size) noexcept {
     return std::string(buffer, received);
 }
 
-bool Socket::connect(const std::string& host, const unsigned short port) noexcept {
+bool Socket::connect(const std::string& host,
+                     const unsigned short port) noexcept {
     auto address = createAddress(host, port);
     if (::connect(handle,
                   reinterpret_cast<sockaddr*>(&address),
