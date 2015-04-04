@@ -13,7 +13,7 @@ bool Listener::accept(Socket* socket) noexcept {
     return true;
 }
 
-bool Listener::listen(unsigned short port) noexcept {
+bool Listener::listen(const unsigned short port) noexcept {
     auto address = createAddress("0.0.0.0", port);
     if (bind(handle,
              reinterpret_cast<sockaddr*>(&address),
