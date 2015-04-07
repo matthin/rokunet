@@ -13,6 +13,7 @@ add_library(
 )
 
 ADD_DEFINITIONS(-std=c++11)
+SET(CMAKE_EXE_LINKER_FLAGS "-pthread")
 
 add_subdirectory(Tests)
 enable_testing()
