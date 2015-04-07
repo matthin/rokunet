@@ -87,37 +87,37 @@ unsigned short Socket::getLocalPort() const noexcept {
 int Socket::domainToInt(const Domain domain) {
     int cDomain;
     switch (domain) {
-    case Local:
+    case Domain::Local:
         cDomain = AF_LOCAL;
         break;
-    case Inet:
+    case Domain::Inet:
         cDomain = AF_INET;
         break;
-    case Inet6:
+    case Domain::Inet6:
         cDomain = AF_INET6;
         break;
-    case IPX:
+    case Domain::IPX:
         cDomain = AF_IPX;
         break;
-    case Netlink:
+    case Domain::Netlink:
         cDomain = AF_NETLINK;
         break;
-    case X25:
+    case Domain::X25:
         cDomain = AF_X25;
         break;
-    case AX25:
+    case Domain::AX25:
         cDomain = AF_AX25;
         break;
-    case ATMPVC:
+    case Domain::ATMPVC:
         cDomain = AF_ATMPVC;
         break;
-    case AppleTalk:
+    case Domain::AppleTalk:
         cDomain = AF_APPLETALK;
         break;
-    case Packet:
+    case Domain::Packet:
         cDomain = AF_PACKET;
         break;
-    case ALG:
+    case Domain::ALG:
         cDomain = AF_ALG;
         break;
     }
@@ -127,19 +127,19 @@ int Socket::domainToInt(const Domain domain) {
 int Socket::typeToInt(const Type type) {
     int cType;
     switch (type) {
-    case Stream:
+    case Type::Stream:
         cType = SOCK_STREAM;
         break;
-    case Dgram:
+    case Type::Dgram:
         cType = SOCK_DGRAM;
         break;
-    case SeqPacket:
+    case Type::SeqPacket:
         cType = SOCK_SEQPACKET;
         break;
-    case Raw:
+    case Type::Raw:
         cType = SOCK_RAW;
         break;
-    case RDM:
+    case Type::RDM:
         cType = SOCK_RDM;
         break;
     }

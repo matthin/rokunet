@@ -8,7 +8,7 @@ namespace rokunet {
 
 class Socket {
 public:
-    enum Domain {
+    enum struct Domain {
         Local,
         Inet,
         Inet6,
@@ -22,7 +22,7 @@ public:
         ALG
     };
 
-    enum Type {
+    enum struct Type {
         Stream,
         Dgram,
         SeqPacket,
@@ -44,8 +44,8 @@ public:
     };
 
     Socket(
-        Domain domain = Inet,
-        Type type = Stream,
+        Domain domain = Domain::Inet,
+        Type type = Type::Stream,
         Protocol protocol = Protocol::IP
     );
     ~Socket();
