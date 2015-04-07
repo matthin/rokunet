@@ -28,17 +28,13 @@ std::string Socket::receive(const unsigned int size) noexcept {
 bool Socket::connect(const std::string& host,
                      const unsigned short port) noexcept {
     auto address = createAddress(host, port);
-    if (::connect(handle,
-                  reinterpret_cast<sockaddr*>(&address),
-                  sizeof(address)) == 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return ::connect(handle,
+                     reinterpret_cast<sockaddr*>(&address),
+                     sizeof(address)) == 0;
 }
 
 bool Socket::disconnect() noexcept {
-    return ::close(handle);
+    return ::close(handle) == 0;
 }
 
 sockaddr_in Socket::createAddress(const std::string& host,
