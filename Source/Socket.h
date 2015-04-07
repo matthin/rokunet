@@ -8,7 +8,21 @@ namespace rokunet {
 
 class Socket {
 public:
-    Socket();
+    enum Domain {
+        Local,
+        Inet,
+        Inet6,
+        IPX,
+        Netlink,
+        X25,
+        AX25,
+        ATMPVC,
+        AppleTalk,
+        Packet,
+        ALG
+    };
+
+    Socket(Domain domain = Inet);
     ~Socket();
 
     /**
@@ -63,6 +77,9 @@ protected:
      */
     sockaddr_in
     createAddress(const std::string& host, unsigned short port) const noexcept;
+
+private:
+    unsigned short domainToInt(Domain domain);
 };
 
 } // namespace rokunet

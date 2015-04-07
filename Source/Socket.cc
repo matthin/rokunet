@@ -6,8 +6,8 @@
 
 namespace rokunet {
 
-Socket::Socket() {
-    handle = socket(AF_INET, SOCK_STREAM, 0);
+Socket::Socket(const Domain domain) {
+    handle = socket(domainToInt(domain), SOCK_STREAM, 0);
     setTimeout(5);
 }
 
@@ -81,6 +81,46 @@ unsigned short Socket::getLocalPort() const noexcept {
     getsockname(handle, reinterpret_cast<sockaddr*>(&address), &size);
 
     return ntohs(address.sin_port);
+}
+
+unsigned short Socket::domainToInt(const Domain domain) {
+    int cDomain;
+    switch (domain) {
+    case Local:
+        cDomain = AF_LOCAL;
+        break;
+    case Inet:
+        cDomain = AF_INET;
+        break;
+    case Inet6:
+        cDomain = AF_INET6;
+        break;
+    case IPX:
+        cDomain = AF_IPX;
+        break;
+    case Netlink:
+        cDomain = AF_NETLINK;
+        break;
+    case X25:
+        cDomain = AF_X25;
+        break;
+    case AX25:
+        cDomain = AF_AX25;
+        break;
+    case ATMPVC:
+        cDomain = AF_ATMPVC;
+        break;
+    case AppleTalk:
+        cDomain = AF_APPLETALK;
+        break;
+    case Packet:
+        cDomain = AF_PACKET;
+        break;
+    case ALG:
+        cDomain = AF_ALG;
+        break;
+    }
+    return cDomain;
 }
 
 } // namespace rokunet
