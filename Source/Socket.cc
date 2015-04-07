@@ -6,8 +6,9 @@
 
 namespace rokunet {
 
-Socket::Socket(const Domain domain) {
-    handle = socket(domainToInt(domain), SOCK_STREAM, 0);
+Socket::Socket(const Domain domain, const Type type, const Protocol protocol) {
+    handle = socket(domainToInt(domain), typeToInt(type),
+                    protocolToInt(protocol));
     setTimeout(5);
 }
 
@@ -83,7 +84,7 @@ unsigned short Socket::getLocalPort() const noexcept {
     return ntohs(address.sin_port);
 }
 
-unsigned short Socket::domainToInt(const Domain domain) {
+int Socket::domainToInt(const Domain domain) {
     int cDomain;
     switch (domain) {
     case Local:
@@ -121,6 +122,65 @@ unsigned short Socket::domainToInt(const Domain domain) {
         break;
     }
     return cDomain;
+}
+
+int Socket::typeToInt(const Type type) {
+    int cType;
+    switch (type) {
+    case Stream:
+        cType = SOCK_STREAM;
+        break;
+    case Dgram:
+        cType = SOCK_DGRAM;
+        break;
+    case SeqPacket:
+        cType = SOCK_SEQPACKET;
+        break;
+    case Raw:
+        cType = SOCK_RAW;
+        break;
+    case RDM:
+        cType = SOCK_RDM;
+        break;
+    }
+    return cType;
+}
+
+int Socket::protocolToInt(const Protocol protocol) {
+    int cProtocol;
+    switch (protocol) {
+    case Protocol::IP:
+        cProtocol = IPPROTO_IP;
+        break;
+    case Protocol::ICMP:
+        cProtocol = IPPROTO_ICMP;
+        break;
+    case Protocol::TCP:
+        cProtocol = IPPROTO_TCP;
+        break;
+    case Protocol::EGP:
+        cProtocol = IPPROTO_EGP;
+        break;
+    case Protocol::PUP:
+        cProtocol = IPPROTO_PUP;
+        break;
+    case Protocol::UDP:
+        cProtocol = IPPROTO_UDP;
+        break;
+    case Protocol::IDP:
+        cProtocol = IPPROTO_IDP;
+        break;
+    case Protocol::TP:
+        cProtocol = IPPROTO_TP;
+        break;
+    case Protocol::Raw:
+        cProtocol = IPPROTO_RAW;
+        break;
+    case Protocol::Max:
+        cProtocol = IPPROTO_MAX;
+        break;
+    }
+    return cProtocol;
 }
 
 } // namespace rokunet

@@ -22,7 +22,32 @@ public:
         ALG
     };
 
-    Socket(Domain domain = Inet);
+    enum Type {
+        Stream,
+        Dgram,
+        SeqPacket,
+        Raw,
+        RDM
+    };
+
+    enum struct Protocol {
+        IP,
+        ICMP,
+        TCP,
+        EGP,
+        PUP,
+        UDP,
+        IDP,
+        TP,
+        Raw,
+        Max
+    };
+
+    Socket(
+        Domain domain = Inet,
+        Type type = Stream,
+        Protocol protocol = Protocol::IP
+    );
     ~Socket();
 
     /**
@@ -79,7 +104,9 @@ protected:
     createAddress(const std::string& host, unsigned short port) const noexcept;
 
 private:
-    unsigned short domainToInt(Domain domain);
+    int domainToInt(Domain domain);
+    int typeToInt(Type type);
+    int protocolToInt(Protocol protocol);
 };
 
 } // namespace rokunet
