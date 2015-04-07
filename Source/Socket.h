@@ -104,8 +104,19 @@ protected:
     createAddress(const std::string& host, unsigned short port) const noexcept;
 
 private:
+    /**
+     * Converts Domain enum into a c-style int.
+     */
     int domainToInt(Domain domain);
+
+    /**
+     * Converts Type enum into a c-style int.
+     */
     int typeToInt(Type type);
+
+    /**
+     * Converts Protocol enum into a c-style int.
+     */
     int protocolToInt(Protocol protocol);
 };
 
