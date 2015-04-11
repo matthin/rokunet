@@ -14,13 +14,15 @@ bool Listener::accept(Socket* socket) noexcept {
 }
 
 bool Listener::listen(const unsigned short port) noexcept {
+    // Prevents socket from lingering, therefore server can restart instantly.
+    const int option = 1;
+    setsockopt(handle, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &option, sizeof(option));
+
     auto address = createAddress("0.0.0.0", port);
     if (bind(handle,
              reinterpret_cast<sockaddr*>(&address),
              sizeof(address)) == 0) {
-        // 0 means success, and -1 means failure.
-        // However the int to boolean conversion is opposite.
-        return !::listen(handle, 0);
+        return ::listen(handle, 0) == 0;
     } else {
         return false;
     }
