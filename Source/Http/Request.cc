@@ -12,8 +12,8 @@ Request::Request(const std::string body,
                  const std::string location,
                  const Method method,
                  const Version version)
-    : body(body), headers(headers), location(location), method(method),
-    version(version) {
+    : body(body), headers(headers), host(host), location(location),
+    method(method), version(version) {
 }
 
 Response Request::send() const {
