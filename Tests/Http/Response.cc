@@ -1,6 +1,18 @@
 #include "Catch.h"
 #include <Http/Response.h>
 
+TEST_CASE("Response is prepared.") {
+    const auto response = rokunet::Http::Response::Builder()
+                          .setCode(200)
+                          .setCodeMessage("OK")
+                          .setBody("Example Test")
+                          .build();
+
+    REQUIRE(response.prepare() == "HTTP/1.1 200 OK\r\n"
+                                  "\r\n"
+                                  "Example Test");
+}
+
 TEST_CASE("Factory builds object") {
     const auto response = rokunet::Http::Response::Factory(
         "HTTP/1.1 200 OK\r\n"

@@ -9,6 +9,7 @@ namespace Http {
 
 class Response {
 public:
+    class Builder;
     class Factory; 
 
     Response(
@@ -18,10 +19,43 @@ public:
         std::string body
     );
 
+    std::string prepare() const;
+
     const unsigned short code;
     const std::string codeMessage;
     const std::unordered_map<std::string, std::string> headers;
     const std::string body;
+};
+
+class Response::Builder {
+public:
+    Builder& setCode(const unsigned short code) {
+        this->code = code;
+        return *this;
+    }
+    Builder& setCodeMessage(const std::string codeMessage) {
+        this->codeMessage = codeMessage;
+        return *this;
+    }
+    Builder& setHeaders(const std::unordered_map<std::string,
+                                                 std::string> headers) {
+        this->headers = headers;
+        return *this;
+    }
+    Builder& setBody(const std::string body) {
+        this->body = body;
+        return *this;
+    }
+
+    Response build() const {
+        return Response(code, codeMessage, headers, body);
+    }
+
+private:
+    unsigned short code;
+    std::string codeMessage;
+    std::unordered_map<std::string, std::string> headers;
+    std::string body;
 };
 
 class Response::Factory {
