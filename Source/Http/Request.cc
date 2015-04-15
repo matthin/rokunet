@@ -1,7 +1,7 @@
 #include "Http/Request.h"
 
-#include "Socket.h"
 #include <sstream>
+#include <memory>
 
 namespace rokunet {
 namespace Http {
@@ -14,6 +14,26 @@ Request::Request(const std::string body,
                  const Version version)
     : body(body), headers(headers), location(location), method(method),
     version(version) {
+}
+
+Response Request::send() const {
+    std::unique_ptr<Socket> socket(new Socket);
+    return send(socket.get());
+}
+
+Response Request::send(Socket* socket) const {
+    socket->connect(host, 80);
+    socket->send(prepare());
+
+    std::ostringstream rawResponse;
+    for (int i = 0; i < 10; ++i) {
+        rawResponse << socket->receive(256);
+        if (rawResponse.str().size() / i != 256) {
+            break;
+        }
+    }
+
+    return Response::Factory(rawResponse.str()).build();
 }
 
 std::string Request::prepare() const {
