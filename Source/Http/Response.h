@@ -60,6 +60,10 @@ private:
 
 class Response::Factory {
 public:
+    /**
+     * Constructs a Response from its text representation.
+     * Useful when running an HTTP client.
+     */
     Factory(const std::string rawResponse) {
         std::istringstream stream(rawResponse);
 

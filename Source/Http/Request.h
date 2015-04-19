@@ -23,9 +23,19 @@ enum struct Method {
 #undef major
 #undef minor
 
+/**
+ * HTTP version.
+ */
 struct Version {
+    /**
+     * @param major Major HTTP version number.
+     * @param minor Minor HTTP version number.
+     */
     Version(const unsigned short major, const unsigned short minor)
         : major(major), minor(minor) {};
+    /**
+     * Copy constructor.
+     */
     Version(const Version& original)
         : major(original.major), minor(original.minor) {};
     bool operator ==(const Version& other) const {
@@ -38,6 +48,9 @@ struct Version {
     const unsigned short minor;
 };
 
+/**
+ * HTTP request wrapper.
+ */
 class Request {
 public:
     class Builder;
@@ -52,8 +65,21 @@ public:
         Version version
     );
 
+    /**
+     * Sends request using new socket.
+     * Used when you don't care about what socket is used.
+     */
     Response send() const;
+
+    /**
+     * Sends request using specifies socket.
+     * Used when you care about which socket is used.
+     */
     Response send(Socket* socket) const;
+
+    /**
+     * Converts Request into a string suitable to be sent to a HTTP server.
+     */
     std::string prepare() const;
 
     const std::string body;
@@ -109,6 +135,10 @@ private:
 
 class Request::Factory {
 public:
+    /**
+     * Constructs a Request from its text representation.
+     * Useful when running an HTTP server.
+     */
     Factory(const std::string& rawRequest) {
         std::istringstream stream(rawRequest);
 
