@@ -10,14 +10,6 @@
 namespace rokunet {
 namespace Http {
 
-enum struct Method {
-    Delete,
-    Get,
-    Head,
-    Post,
-    Put,
-};
-
 // gnu macros major and minor exist for some dumb reason.
 // See http://stackoverflow.com/questions/22240973/major-and-minor-macros-defined-in-sys-sysmacros-h-pulled-in-by-iterator
 #undef major
@@ -55,6 +47,26 @@ class Request {
 public:
     class Builder;
     class Factory;
+
+    enum struct Method {
+        Delete,
+        Get,
+        Head,
+        Post,
+        Put,
+    };
+
+    /**
+     * Converts Method into a String.
+     * Ex. Method::Get becomes GET.
+     */
+    std::string methodToString(Method method) const;
+
+    /**
+     * Converts Method in string form into proper Method.
+     * Ex. GET becames Method::Get.
+     */
+    Method stringToMethod(const std::string& textForm) const;
 
     Request(
         std::string body,
@@ -144,17 +156,7 @@ public:
 
         std::string methodText;
         std::getline(stream, methodText, ' ');
-        if (methodText == "DELETE") {
-            method = Method::Delete;
-        } else if (methodText == "GET") {
-            method = Method::Get;
-        } else if (methodText == "HEAD") {
-            method = Method::Head;
-        } else if (methodText == "POST") {
-            method = Method::Post;
-        } else if (methodText == "PUT") {
-            method = Method::Put;
-        }
+        //method = stringToMethod(methodText);
 
         std::string location;
         std::getline(stream, location, ' ');

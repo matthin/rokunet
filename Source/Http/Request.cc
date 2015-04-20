@@ -2,9 +2,36 @@
 
 #include <sstream>
 #include <memory>
+#include <unordered_map>
 
 namespace rokunet {
 namespace Http {
+
+std::string Request::methodToString(const Method method) const {
+    const std::string temp[] = {
+        "DELETE",
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT"
+    };
+
+    return std::string(
+        temp[static_cast<int>(method)]
+    );
+}
+
+Request::Method Request::stringToMethod(const std::string& textForm) const {
+    const std::unordered_map<std::string, unsigned short> map {
+        {"DELETE", 0},
+        {"GET", 1},
+        {"HEAD", 2},
+        {"POST", 3},
+        {"PUT", 4}
+    };
+
+    return static_cast<Method>(map.at("textForm"));
+}
 
 Request::Request(const std::string body,
                  const std::unordered_map<std::string, std::string> headers,
@@ -39,23 +66,7 @@ Response Request::send(Socket* socket) const {
 std::string Request::prepare() const {
     std::ostringstream out;
 
-    switch (method) {
-    case Method::Delete:
-        out << "DELETE";
-        break;
-    case Method::Get:
-        out << "GET";
-        break;
-    case Method::Head:
-        out << "HEAD";
-        break;
-    case Method::Post:
-        out << "POST";
-        break;
-    case Method::Put:
-        out << "PUT";
-        break;
-    }
+    out << methodToString(method);
 
     out << ' ' << location;
     out << " HTTP/" << version.major << '.' << version.minor << "\r\n";
