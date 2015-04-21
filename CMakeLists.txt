@@ -9,7 +9,7 @@ include_directories(Source/Http)
 add_library(
     rokunet
     STATIC
-    ${SourceFiles}
+    ${rokunetSourceFiles}
 )
 
 ADD_DEFINITIONS(-std=c++11)
