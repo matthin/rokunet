@@ -3,8 +3,7 @@ project(rokunet CXX)
 
 add_subdirectory(Source)
 add_subdirectory(Source/Http)
-include_directories(Source)
-include_directories(Source/Http)
+include_directories(Include/rokunet)
 
 add_library(
     rokunet
