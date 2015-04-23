@@ -202,7 +202,7 @@ public:
         return Request(body, headers, host, location, method, *version);
     }
 
-private:
+protected:
     std::string body;
     std::unordered_map<std::string, std::string> headers;
     std::string location;
