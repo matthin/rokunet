@@ -7,7 +7,7 @@
 namespace rokunet {
 namespace Http {
 
-std::string Request::methodToString(const Method method) const {
+std::string Request::methodToString(const Method method) {
     const std::string temp[] = {
         "DELETE",
         "GET",
@@ -21,7 +21,7 @@ std::string Request::methodToString(const Method method) const {
     );
 }
 
-Request::Method Request::stringToMethod(const std::string& textForm) const {
+Request::Method Request::stringToMethod(const std::string& textForm) {
     const std::unordered_map<std::string, unsigned short> map {
         {"DELETE", 0},
         {"GET", 1},
@@ -30,7 +30,7 @@ Request::Method Request::stringToMethod(const std::string& textForm) const {
         {"PUT", 4}
     };
 
-    return static_cast<Method>(map.at("textForm"));
+    return static_cast<Method>(map.at(textForm));
 }
 
 Request::Request(const std::string body,

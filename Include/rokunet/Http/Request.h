@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <memory>
 #include "Response.h"
-#include "Socket.h"
+#include "../Socket.h"
 
 namespace rokunet {
 namespace Http {
@@ -60,13 +60,13 @@ public:
      * Converts Method into a String.
      * Ex. Method::Get becomes GET.
      */
-    std::string methodToString(Method method) const;
+    static std::string methodToString(Method method);
 
     /**
      * Converts Method in string form into proper Method.
      * Ex. GET becames Method::Get.
      */
-    Method stringToMethod(const std::string& textForm) const;
+    static Method stringToMethod(const std::string& textForm);
 
     Request(
         std::string body,
@@ -156,9 +156,8 @@ public:
 
         std::string methodText;
         std::getline(stream, methodText, ' ');
-        //method = stringToMethod(methodText);
+        method = stringToMethod(methodText);
 
-        std::string location;
         std::getline(stream, location, ' ');
 
         std::string protocol;
@@ -202,6 +201,7 @@ public:
     Request build() const {
         return Request(body, headers, host, location, method, *version);
     }
+
 private:
     std::string body;
     std::unordered_map<std::string, std::string> headers;
